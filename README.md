@@ -8,7 +8,11 @@ Simple Demonstration of Vue + ROS Integration
     <sup>Demonstration (As seen in Chrome)</sup>
 </p>
 
-### Prerequisite
+## Dependencies
+* Vue 3
+* ROS: *It should be compatible with ROS 1 and 2. Please open an issue if not.*
+
+## Prerequisite
 Make sure to run the following commands in the terminal
 ```console
 roslaunch rosbridge_server rosbridge_websocket.launch
@@ -21,7 +25,7 @@ rosrun rospy_tutorials add_two_ints_server
 npm install
 ```
 
-### Run for development
+### Run (for development)
 ```console
 npm run serve
 ```
@@ -31,7 +35,7 @@ npm run serve
 npm run lint
 ```
 
-### Compiles for production
+### Compile (for production)
 ```console
 npm run build
 ```
