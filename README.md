@@ -3,7 +3,7 @@ Simple Demonstration of Vue + ROS Integration
 
 ## Demonstration
 <p align="center">
-    <img src="docs/demo.gif" width="800">
+    <img src="docs/demo.gif" alt="gif showing a demo">
     </br>
     <sup>Demonstration (As seen in Chrome)</sup>
 </p>
