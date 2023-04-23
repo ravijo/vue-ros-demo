@@ -11,8 +11,12 @@ Simple Demonstration of Vue + ROS Integration
 ## Dependencies
 * Vue v3
 * roslib v1.3.0
-* ROS 
-    * It should be compatible with ROS 1 and 2. Please open an issue if not.
+* ROS (compatible with ROS 1 and 2, see [thanks](#thanks) section)
+* If you do not have `rosbridge_server` you need to install it with the following command
+    ```bash
+    apt search rosbridge_suite
+    sudo apt install -y ros-<rosdistro>-rosbridge-suite # ros-humble-rosbridge-suite
+    ```
 
 ## Prerequisite
 Make sure to run the following commands in the terminal
@@ -29,11 +33,7 @@ ros2 launch rosbridge_server rosbridge_websocket_launch.xml
 ros2 run demo_nodes_py add_two_ints_server
 ros2 run demo_nodes_py talker
 ```
-If you do not have `rosbridge_server` you need to install it with the following command
-```bash
-apt search rosbridge_suite
-sudo apt install -y ros-<rosdistro>-rosbridge-suite # ros-humble-rosbridge-suite
-```
+
 After starting the `node` you can find the `topic/service` and its type with the following instructions.Then you need to modify the `allowedMessageType/serviceType` in file `TopicSubscriber.vue/ServiceClient.vue` to receive the message.
 ```console
 $ ros2 service list
@@ -95,33 +95,31 @@ npm run build
 ```
 
 ## Note
-The project has been tested with the following npm packages:
+* NPM Packages: The project has been tested with the following npm packages:
+    ```console
+    $ npm list
+    vue-ros-demo@0.1.0 /home/ravi/vue-ros-demo
+    ├── @babel/core@7.18.10
+    ├── @babel/eslint-parser@7.18.9
+    ├── @vue/cli-plugin-babel@5.0.8
+    ├── @vue/cli-plugin-eslint@5.0.8
+    ├── @vue/cli-service@5.0.8
+    ├── @vue/eslint-config-standard@6.1.0
+    ├── core-js@3.24.1
+    ├── eslint-plugin-import@2.26.0
+    ├── eslint-plugin-node@11.1.0
+    ├── eslint-plugin-promise@5.2.0
+    ├── eslint-plugin-vue@8.7.1
+    ├── eslint@7.32.0
+    ├── roslib@1.3.0
+    └── vue@3.2.37
+    ```
+* Multiple PC Setup: In case of having multiple PC (more specifically, the `rosbridge_server` running on a remote machine), you must use the correct IP address (please note that the `localhost` and `127.0.0.1` refer to the same/local device). You need to replace `localhost` with the correct IP address, in `main.js`  as shown below: https://github.com/ravijo/vue-ros-demo/blob/b5bab3ab5339189926a019944376a2a3a0b2aee9/src/main.js#L9-L11
+Reference: [https://github.com/ravijo/vue-ros-demo/issues/1](https://github.com/ravijo/vue-ros-demo/issues/1)
 
-```console
-$ npm list
-vue-ros-demo@0.1.0 /home/ravi/vue-ros-demo
-├── @babel/core@7.18.10
-├── @babel/eslint-parser@7.18.9
-├── @vue/cli-plugin-babel@5.0.8
-├── @vue/cli-plugin-eslint@5.0.8
-├── @vue/cli-service@5.0.8
-├── @vue/eslint-config-standard@6.1.0
-├── core-js@3.24.1
-├── eslint-plugin-import@2.26.0
-├── eslint-plugin-node@11.1.0
-├── eslint-plugin-promise@5.2.0
-├── eslint-plugin-vue@8.7.1
-├── eslint@7.32.0
-├── roslib@1.3.0
-└── vue@3.2.37
-```
+## Thanks
+Following authors are sincerely acknowledged for the improvements of this package-
+* [zmoth (织蛾)](https://github.com/zmoth): For providing support for ROS 2 version
 
-In case of having multiple PC (more specifically, rosbridge_server running on a remote machine), you must use the correct IP address. The localhost and 127.0.0.1 refer to the same device. So your node can not connect to rosbridge_server.
 
-You can change the following ip addresses, in `main.js`
-```js
-app.config.globalProperties.ros = new ROSLIB.Ros({
-  url: 'ws://localhost:9090/'
-})
-```
-reference: [https://github.com/ravijo/vue-ros-demo/issues/1](https://github.com/ravijo/vue-ros-demo/issues/1)
+
