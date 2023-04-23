@@ -16,10 +16,38 @@ Simple Demonstration of Vue + ROS Integration
 
 ## Prerequisite
 Make sure to run the following commands in the terminal
+### ROS1
 ```console
 roslaunch rosbridge_server rosbridge_websocket.launch
 rostopic pub /listener std_msgs/String "Hello, World"
 rosrun rospy_tutorials add_two_ints_server
+```
+
+### ROS2
+```bash
+ros2 launch rosbridge_server rosbridge_websocket_launch.xml
+ros2 run demo_nodes_py add_two_ints_server
+ros2 run demo_nodes_py talker
+```
+If you do not have `rosbridge_server` you need to install it with the following command
+```bash
+apt search rosbridge_suite
+sudo apt install -y ros-<rosdistro>-rosbridge-suite # ros-humble-rosbridge-suite
+```
+After starting the `node` you can find the `topic/service` and its type with the following instructions.Then you need to modify the `allowedMessageType/serviceType` in file `TopicSubscriber.vue/ServiceClient.vue` to receive the message.
+```console
+$ ros2 service list
+/add_two_ints
+$ ros2 service type /add_two_ints
+example_interfaces/srv/AddTwoInts
+```
+```console
+$ ros2 topic list
+/chatter
+$ ros2 topic info /chatter
+Type: std_msgs/msg/String
+Publisher count: 1
+Subscription count: 0
 ```
 
 ## Installation
@@ -87,3 +115,13 @@ vue-ros-demo@0.1.0 /home/ravi/vue-ros-demo
 ├── roslib@1.3.0
 └── vue@3.2.37
 ```
+
+In case of having multiple PC (more specifically, rosbridge_server running on a remote machine), you must use the correct IP address. The localhost and 127.0.0.1 refer to the same device. So your node can not connect to rosbridge_server.
+
+You can change the following ip addresses, in `main.js`
+```js
+app.config.globalProperties.ros = new ROSLIB.Ros({
+  url: 'ws://localhost:9090/'
+})
+```
+reference: [https://github.com/ravijo/vue-ros-demo/issues/1](https://github.com/ravijo/vue-ros-demo/issues/1)
