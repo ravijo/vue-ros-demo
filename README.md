@@ -20,14 +20,14 @@ Simple Demonstration of Vue + ROS Integration
 
 ## Prerequisite
 Make sure to run the following commands in the terminal
-### ROS1
+### ROS 1
 ```console
 roslaunch rosbridge_server rosbridge_websocket.launch
 rostopic pub /listener std_msgs/String "Hello, World"
 rosrun rospy_tutorials add_two_ints_server
 ```
 
-### ROS2
+### ROS 2
 ```bash
 ros2 launch rosbridge_server rosbridge_websocket_launch.xml
 ros2 run demo_nodes_py add_two_ints_server
